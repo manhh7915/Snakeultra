@@ -1572,9 +1572,8 @@
 
         <div class="intro-buttons">
           <button id="introEnterBtn" class="intro-button-primary" type="button">Vào trò chơi</button>
-          <button id="introMusicBtn" class="intro-button-secondary" type="button">🎵 Nhạc chờ: Bật</button>
         </div>
-        <div id="introStatus" class="intro-status">Nhấn “Nhạc chờ” để bật âm thanh ngay từ màn hình chờ.</div>
+        <div id="introStatus" class="intro-status">Nhạc chờ sẽ tự bật khi vào màn hình chờ. Nếu trình duyệt chặn âm thanh, nhạc sẽ bật sau lần chạm/click/phím đầu tiên.</div>
 
         <div class="intro-loader">
           <div class="intro-loader-head">
@@ -1986,11 +1985,36 @@
       els.appRoot.classList.add('is-locked');
       els.introScreen.classList.remove('hidden');
       els.introGameTitle.textContent = getGameTitle();
-      if (audioSettings.music) {
-        updateIntroStatus('Nhấn “Nhạc chờ” để bật âm thanh ở màn hình chờ.');
-      } else {
-        updateIntroStatus('Nhạc đang tắt. Bạn có thể bật lại bằng nút “Nhạc chờ”.');
-      }
+
+      // Bật nhạc chờ mặc định. Một số trình duyệt vẫn chặn âm thanh
+      // cho đến khi người dùng click/chạm/nhấn phím lần đầu.
+      audioSettings.music = true;
+      saveAudioSettings();
+      renderAudioControls();
+      updateIntroStatus('Nhạc chờ đang tự bật. Nếu trình duyệt chặn âm thanh, hãy click/chạm một lần vào trang.');
+      startMenuMusic();
+    }
+
+    function unlockIntroAudioOnce() {
+      if (!isIntroVisible() || !audioSettings.music) return;
+      ensureAudio();
+      startMenuMusic();
+      updateIntroStatus('Nhạc chờ đang phát tự động.');
+    }
+
+    function setupIntroAutoMusic() {
+      // Thử bật ngay khi tải trang. Nếu trình duyệt chặn autoplay,
+      // các sự kiện dưới đây sẽ tự mở âm thanh khi người dùng tương tác lần đầu.
+      setTimeout(() => {
+        if (isIntroVisible() && audioSettings.music) startMenuMusic();
+      }, 250);
+
+      ['pointerdown', 'keydown', 'touchstart', 'mousemove'].forEach(eventName => {
+        window.addEventListener(eventName, unlockIntroAudioOnce, {
+          once: true,
+          passive: true
+        });
+      });
     }
 
     function closeIntroScreen() {
@@ -2823,7 +2847,7 @@
     });
 
     els.introEnterBtn.addEventListener('click', closeIntroScreen);
-    els.introMusicBtn.addEventListener('click', toggleMusic);
+    if (els.introMusicBtn) els.introMusicBtn.addEventListener('click', toggleMusic);
 
     els.musicBtn.addEventListener('click', toggleMusic);
     els.sfxBtn.addEventListener('click', toggleSfx);
@@ -2846,6 +2870,7 @@
     renderLeaderboard();
     resetGame(1);
     enterIntroScreen();
+    setupIntroAutoMusic();
   </script>
 </body>
 </html>
