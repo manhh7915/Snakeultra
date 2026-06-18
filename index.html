@@ -996,16 +996,424 @@
       }
     }
 
+  
+
+    .app.is-locked {
+      filter: blur(12px) saturate(.8) brightness(.7);
+      pointer-events: none;
+      user-select: none;
+      transition: filter .45s ease, opacity .45s ease;
+      opacity: .68;
+    }
+
+    .intro-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(25,199,255,.18), transparent 28%),
+        radial-gradient(circle at 80% 15%, rgba(163,91,255,.2), transparent 24%),
+        radial-gradient(circle at 50% 80%, rgba(60,242,180,.13), transparent 28%),
+        linear-gradient(180deg, rgba(4,8,24,.78), rgba(4,8,24,.92));
+      backdrop-filter: blur(8px);
+      transition: opacity .45s ease, visibility .45s ease;
+    }
+
+    .intro-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .intro-panel {
+      width: min(960px, 100%);
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        linear-gradient(135deg, rgba(11,18,48,.95), rgba(15,23,60,.88));
+      box-shadow: 0 35px 120px rgba(0,0,0,.42), 0 0 0 1px rgba(25,199,255,.08) inset;
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 26px;
+    }
+
+    .intro-panel::before,
+    .intro-panel::after {
+      content: "";
+      position: absolute;
+      inset: auto;
+      border-radius: 999px;
+      filter: blur(12px);
+      opacity: .85;
+      pointer-events: none;
+    }
+
+    .intro-panel::before {
+      width: 240px;
+      height: 240px;
+      top: -80px;
+      right: -55px;
+      background: radial-gradient(circle, rgba(25,199,255,.26), transparent 70%);
+    }
+
+    .intro-panel::after {
+      width: 260px;
+      height: 260px;
+      bottom: -110px;
+      left: -60px;
+      background: radial-gradient(circle, rgba(163,91,255,.22), transparent 72%);
+    }
+
+    .intro-copy,
+    .intro-visual {
+      position: relative;
+      z-index: 1;
+    }
+
+    .intro-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.86);
+      font-size: .9rem;
+      margin-bottom: 18px;
+    }
+
+    .intro-copy h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.7rem);
+      line-height: 1.06;
+      letter-spacing: -.03em;
+      color: #fff;
+    }
+
+    .intro-copy p {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.75;
+      max-width: 560px;
+    }
+
+    .intro-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 22px 0 26px;
+    }
+
+    .intro-chip {
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.92);
+      font-weight: 600;
+      font-size: .95rem;
+    }
+
+    .intro-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .intro-button-primary,
+    .intro-button-secondary {
+      appearance: none;
+      border: 0;
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, opacity .18s ease;
+    }
+
+    .intro-button-primary {
+      padding: 15px 24px;
+      color: #06111f;
+      background: linear-gradient(135deg, #ffd166, #3cf2b4 58%, #19c7ff);
+      box-shadow: 0 16px 40px rgba(25,199,255,.22);
+    }
+
+    .intro-button-secondary {
+      padding: 15px 20px;
+      color: #fff;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    .intro-button-primary:hover,
+    .intro-button-secondary:hover {
+      transform: translateY(-2px);
+    }
+
+    .intro-status {
+      margin-top: 16px;
+      color: rgba(255,255,255,.72);
+      min-height: 22px;
+      font-size: .95rem;
+    }
+
+    .intro-loader {
+      margin-top: 24px;
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.045);
+    }
+
+    .intro-loader-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: rgba(255,255,255,.88);
+      font-weight: 700;
+      font-size: .95rem;
+    }
+
+    .intro-loader-bar {
+      position: relative;
+      width: 100%;
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+    }
+
+    .intro-loader-bar::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 38%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #19c7ff, #3cf2b4, #ffd166);
+      box-shadow: 0 0 20px rgba(60,242,180,.25);
+      animation: introLoad 2.4s ease-in-out infinite;
+    }
+
+    @keyframes introLoad {
+      0% { transform: translateX(-100%); }
+      50% { transform: translateX(165%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .intro-visual {
+      display: flex;
+      align-items: stretch;
+    }
+
+    .intro-art {
+      flex: 1;
+      min-height: 360px;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,.1);
+      background:
+        radial-gradient(circle at 70% 20%, rgba(255,209,102,.18), transparent 16%),
+        radial-gradient(circle at 18% 82%, rgba(25,199,255,.22), transparent 18%),
+        linear-gradient(145deg, rgba(6,16,44,.96), rgba(10,17,40,.76));
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+
+    .intro-art::before {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.06);
+      background:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: .55;
+    }
+
+    .intro-snake-trail {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .intro-snake-trail span {
+      position: absolute;
+      display: block;
+      border-radius: 999px;
+      filter: blur(1px);
+      box-shadow: 0 0 26px currentColor;
+      opacity: .95;
+    }
+
+    .intro-snake-trail span:nth-child(1) {
+      width: 280px;
+      height: 22px;
+      left: 54%;
+      top: 17%;
+      transform: translateX(-50%) rotate(28deg);
+      color: rgba(163,91,255,.95);
+      background: linear-gradient(90deg, rgba(163,91,255,0), rgba(163,91,255,.92), rgba(25,199,255,.9));
+    }
+
+    .intro-snake-trail span:nth-child(2) {
+      width: 320px;
+      height: 24px;
+      left: 50%;
+      top: 45%;
+      transform: translateX(-50%) rotate(-18deg);
+      color: rgba(25,199,255,.96);
+      background: linear-gradient(90deg, rgba(25,199,255,0), rgba(25,199,255,.94), rgba(60,242,180,.92));
+    }
+
+    .intro-snake-trail span:nth-child(3) {
+      width: 250px;
+      height: 20px;
+      left: 48%;
+      top: 73%;
+      transform: translateX(-50%) rotate(24deg);
+      color: rgba(60,242,180,.94);
+      background: linear-gradient(90deg, rgba(60,242,180,0), rgba(60,242,180,.92), rgba(255,209,102,.9));
+    }
+
+    .intro-food {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff3bf, #ffd166 55%, #ff477e);
+      box-shadow: 0 0 24px rgba(255,209,102,.55);
+      animation: floatFood 2.4s ease-in-out infinite;
+    }
+
+    .intro-food.one { top: 18%; left: 18%; }
+    .intro-food.two { right: 14%; top: 38%; animation-delay: .5s; }
+    .intro-food.three { left: 28%; bottom: 16%; animation-delay: 1s; }
+
+    @keyframes floatFood {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-10px) scale(1.06); }
+    }
+
+    .intro-mini-card {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .intro-mini-card div {
+      border-radius: 16px;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(4,9,28,.72);
+      color: rgba(255,255,255,.86);
+      font-size: .9rem;
+      text-align: center;
+    }
+
+    .intro-mini-card strong {
+      display: block;
+      color: #fff;
+      font-size: 1.02rem;
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 920px) {
+      .intro-panel {
+        grid-template-columns: 1fr;
+        padding: 28px;
+      }
+      .intro-art {
+        min-height: 300px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .intro-screen { padding: 16px; }
+      .intro-panel { padding: 20px; border-radius: 24px; }
+      .intro-copy h2 { font-size: 2rem; }
+      .intro-buttons { flex-direction: column; }
+      .intro-button-primary, .intro-button-secondary { width: 100%; }
+      .intro-mini-card { grid-template-columns: 1fr; }
+      .intro-loader-head { flex-direction: column; align-items: flex-start; }
+    }
+
   </style>
 </head>
 <body>
+
+  <div id="introScreen" class="intro-screen" aria-live="polite">
+    <div class="intro-panel">
+      <div class="intro-copy">
+        <div class="intro-kicker">✨ Màn hình chờ • Chào mừng bạn đến với trò chơi</div>
+        <h2 id="introGameTitle">Snake Arena Ultra</h2>
+        <p>Đây là giao diện chờ trước khi vào game. Bạn có thể bật nhạc ngay tại đây, xem nhanh các tính năng nổi bật và bấm vào nút bên dưới để bắt đầu trải nghiệm trò chơi.</p>
+
+        <div class="intro-chip-row">
+          <span class="intro-chip">🐍 Rắn săn mồi web</span>
+          <span class="intro-chip">🎵 Có nhạc chờ</span>
+          <span class="intro-chip">🏆 Bảng xếp hạng</span>
+          <span class="intro-chip">⚡ Độ khó 1–100</span>
+        </div>
+
+        <div class="intro-buttons">
+          <button id="introEnterBtn" class="intro-button-primary" type="button">Vào trò chơi</button>
+          <button id="introMusicBtn" class="intro-button-secondary" type="button">🎵 Nhạc chờ: Bật</button>
+        </div>
+        <div id="introStatus" class="intro-status">Nhấn “Nhạc chờ” để bật âm thanh ngay từ màn hình chờ.</div>
+
+        <div class="intro-loader">
+          <div class="intro-loader-head">
+            <span>Đang sẵn sàng vào game</span>
+            <b>HTML • CSS • JavaScript</b>
+          </div>
+          <div class="intro-loader-bar"></div>
+        </div>
+      </div>
+
+      <div class="intro-visual">
+        <div class="intro-art">
+          <div class="intro-snake-trail">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="intro-food one"></div>
+          <div class="intro-food two"></div>
+          <div class="intro-food three"></div>
+          <div class="intro-mini-card">
+            <div><strong>100</strong>Độ khó</div>
+            <div><strong>Top 10</strong>Bảng xếp hạng</div>
+            <div><strong>Mượt</strong>Hiệu ứng neon</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <div class="orb one"></div>
   <div class="orb two"></div>
   <div class="orb three"></div>
   <div class="beam"></div>
 
-  <main class="app">
+  <main class="app is-locked" id="appRoot">
     <section class="hero">
       <div class="brand">
         <div class="logo">🐍</div>
@@ -1138,6 +1546,12 @@
     const ctx = canvas.getContext('2d');
 
     const els = {
+      appRoot: document.getElementById('appRoot'),
+      introScreen: document.getElementById('introScreen'),
+      introGameTitle: document.getElementById('introGameTitle'),
+      introEnterBtn: document.getElementById('introEnterBtn'),
+      introMusicBtn: document.getElementById('introMusicBtn'),
+      introStatus: document.getElementById('introStatus'),
       gameTitleHeading: document.getElementById('gameTitleHeading'),
       gameTitleInput: document.getElementById('gameTitleInput'),
       saveTitleBtn: document.getElementById('saveTitleBtn'),
@@ -1205,6 +1619,8 @@
     let sfxGain = null;
     let musicTimer = null;
     let musicStep = 0;
+    let menuMusicTimer = null;
+    let menuMusicStep = 0;
     let audioSettings = loadAudioSettings();
 
     const MAX_FRAME_DELTA = 120;
@@ -1272,6 +1688,9 @@
     function renderAudioControls() {
       els.musicBtn.textContent = audioSettings.music ? '🎵 Nhạc: Bật' : '🎵 Nhạc: Tắt';
       els.sfxBtn.textContent = audioSettings.sfx ? '🔊 Hiệu ứng: Bật' : '🔇 Hiệu ứng: Tắt';
+      if (els.introMusicBtn) {
+        els.introMusicBtn.textContent = audioSettings.music ? '🎵 Nhạc chờ: Bật' : '🎵 Nhạc chờ: Tắt';
+      }
       els.musicBtn.classList.toggle('active', audioSettings.music);
       els.sfxBtn.classList.toggle('active', audioSettings.sfx);
       const percent = Math.round(clamp(audioSettings.volume, 0, 1) * 100);
@@ -1322,6 +1741,61 @@
       playTone(620, 0.055, 'triangle', 0.04, sfxGain, 0.03);
     }
 
+
+    function isIntroVisible() {
+      return !!els.introScreen && !els.introScreen.classList.contains('hidden');
+    }
+
+    function updateIntroStatus(message) {
+      if (els.introStatus) els.introStatus.textContent = message;
+    }
+
+    function startMenuMusic() {
+      if (!audioSettings.music || !ensureAudio() || menuMusicTimer) return;
+      stopMusic();
+      const melody = [293.66, 349.23, 440.00, 523.25, 440.00, 349.23, 329.63, 392.00];
+      const bass = [73.42, 0, 110.00, 0, 82.41, 0, 98.00, 0];
+      const tick = () => {
+        if (!audioSettings.music || !isIntroVisible()) return;
+        const note = melody[menuMusicStep % melody.length];
+        const bassNote = bass[menuMusicStep % bass.length];
+        if (note) playTone(note, 0.26, 'triangle', 0.055, musicGain);
+        if (bassNote && menuMusicStep % 2 === 0) playTone(bassNote, 0.34, 'sine', 0.038, musicGain);
+        menuMusicStep += 1;
+      };
+      tick();
+      menuMusicTimer = setInterval(tick, 360);
+      updateIntroStatus('Nhạc chờ đang phát. Bạn có thể bấm “Vào trò chơi” bất cứ lúc nào.');
+    }
+
+    function stopMenuMusic() {
+      if (menuMusicTimer) {
+        clearInterval(menuMusicTimer);
+        menuMusicTimer = null;
+      }
+    }
+
+    function enterIntroScreen() {
+      els.appRoot.classList.add('is-locked');
+      els.introScreen.classList.remove('hidden');
+      els.introGameTitle.textContent = getGameTitle();
+      if (audioSettings.music) {
+        updateIntroStatus('Nhấn “Nhạc chờ” để bật âm thanh ở màn hình chờ.');
+      } else {
+        updateIntroStatus('Nhạc đang tắt. Bạn có thể bật lại bằng nút “Nhạc chờ”.');
+      }
+    }
+
+    function closeIntroScreen() {
+      stopMenuMusic();
+      els.introScreen.classList.add('hidden');
+      els.appRoot.classList.remove('is-locked');
+      ensureAudio();
+      if (audioSettings.sfx) playButtonSound(true);
+      els.audioStatus.textContent = 'Đã vào giao diện trò chơi. Bấm Bắt đầu để chơi.';
+    }
+
+
     function startMusic() {
       if (!audioSettings.music || !ensureAudio() || musicTimer) return;
       const melody = [392, 494, 587, 494, 440, 523, 659, 523, 392, 0, 440, 523, 494, 0, 587, 659];
@@ -1353,11 +1827,20 @@
       ensureAudio();
       if (audioSettings.music) {
         playButtonSound(true);
-        if (running && !paused && !gameOver) startMusic();
-        els.audioStatus.textContent = 'Đã bật nhạc nền.';
+        if (isIntroVisible()) {
+          startMenuMusic();
+          els.audioStatus.textContent = 'Đã bật nhạc chờ.';
+        } else if (running && !paused && !gameOver) {
+          startMusic();
+          els.audioStatus.textContent = 'Đã bật nhạc nền.';
+        } else {
+          els.audioStatus.textContent = 'Đã bật nhạc. Nhấn Bắt đầu để nghe trong game.';
+        }
       } else {
+        stopMenuMusic();
         stopMusic();
         els.audioStatus.textContent = 'Đã tắt nhạc nền.';
+        updateIntroStatus('Nhạc đang tắt. Bạn có thể bật lại bất cứ lúc nào.');
       }
     }
 
@@ -1394,6 +1877,7 @@
     function applyGameTitle(title, save = false) {
       const clean = sanitizeGameTitle(title);
       els.gameTitleHeading.textContent = clean;
+      if (els.introGameTitle) els.introGameTitle.textContent = clean;
       els.gameTitleInput.value = clean;
       document.title = `${clean} - Rắn Săn Mồi Web`;
       if (save) localStorage.setItem(TITLE_STORAGE_KEY, clean);
@@ -1552,6 +2036,7 @@
       score = 0;
       foodsThisLevel = 0;
       cancelGameLoop();
+      stopMenuMusic();
       stopMusic();
       snake = [
         { x: 11, y: 12 },
@@ -1579,6 +2064,7 @@
     function startGame() {
       applyPlayerName(els.playerName.value, true, false);
       ensureAudio();
+      stopMenuMusic();
       playButtonSound();
       if (running && !paused && !gameOver) return;
       if (gameOver) resetGame(Number(els.startLevel.value));
@@ -1621,6 +2107,7 @@
       running = false;
       gameOver = true;
       cancelGameLoop();
+      stopMenuMusic();
       stopMusic();
       els.pauseBtn.disabled = true;
       shakePower = 1.2;
@@ -1997,6 +2484,9 @@
       }
     });
 
+    els.introEnterBtn.addEventListener('click', closeIntroScreen);
+    els.introMusicBtn.addEventListener('click', toggleMusic);
+
     els.musicBtn.addEventListener('click', toggleMusic);
     els.sfxBtn.addEventListener('click', toggleSfx);
     els.volumeRange.addEventListener('input', changeVolume);
@@ -2017,6 +2507,7 @@
     setupSelectors();
     renderLeaderboard();
     resetGame(1);
+    enterIntroScreen();
   </script>
 </body>
 </html>
