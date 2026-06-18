@@ -1107,7 +1107,7 @@
     }
 
     .intro-chip-row {
-      display: flex;
+      display: none;
       flex-wrap: wrap;
       gap: 12px;
       margin: 22px 0 26px;
@@ -1220,14 +1220,15 @@
       flex: 1;
       min-height: 360px;
       border-radius: 28px;
-      border: 1px solid rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.12);
       background:
-        radial-gradient(circle at 70% 20%, rgba(255,209,102,.18), transparent 16%),
-        radial-gradient(circle at 18% 82%, rgba(25,199,255,.22), transparent 18%),
-        linear-gradient(145deg, rgba(6,16,44,.96), rgba(10,17,40,.76));
+        radial-gradient(circle at 78% 22%, rgba(255,209,102,.22), transparent 18%),
+        radial-gradient(circle at 22% 84%, rgba(25,199,255,.18), transparent 18%),
+        radial-gradient(circle at 58% 48%, rgba(115,84,255,.08), transparent 32%),
+        linear-gradient(145deg, rgba(4,13,38,.98), rgba(8,15,36,.92) 42%, rgba(6,16,34,.86));
       position: relative;
       overflow: hidden;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.04), inset 0 -36px 60px rgba(0,0,0,.18);
     }
 
     .intro-art::before {
@@ -1243,59 +1244,212 @@
       opacity: .55;
     }
 
-    .intro-snake-trail {
+    .intro-art::after {
+      content: "";
+      position: absolute;
+      inset: -20% auto auto -12%;
+      width: 70%;
+      height: 70%;
+      background: radial-gradient(circle, rgba(25,199,255,.18), transparent 68%);
+      filter: blur(22px);
+      animation: introNebula 9s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .intro-grid-glow,
+    .intro-light-sweep,
+    .intro-particles,
+    .intro-rings {
       position: absolute;
       inset: 0;
       pointer-events: none;
     }
 
-    .intro-snake-trail span {
+    .intro-rings { z-index: 1; }
+    .intro-grid-glow, .intro-light-sweep, .intro-particles { z-index: 2; }
+
+    .intro-grid-glow {
+      background:
+        radial-gradient(circle at 50% 20%, rgba(163,91,255,.12), transparent 18%),
+        radial-gradient(circle at 75% 55%, rgba(255,209,102,.10), transparent 20%),
+        radial-gradient(circle at 30% 75%, rgba(60,242,180,.10), transparent 20%);
+      mix-blend-mode: screen;
+      animation: introGlowPulse 4.5s ease-in-out infinite;
+    }
+
+    .intro-light-sweep {
+      background: linear-gradient(120deg, transparent 18%, rgba(255,255,255,.08) 30%, transparent 42%);
+      transform: translateX(-120%) skewX(-18deg);
+      animation: introSweep 5.8s ease-in-out infinite;
+      opacity: .7;
+    }
+
+    .intro-particles span {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff, rgba(255,255,255,.3));
+      box-shadow: 0 0 18px currentColor;
+      opacity: .65;
+      animation: particleFloat 6s linear infinite;
+    }
+
+    .intro-particles span:nth-child(1) { left: 10%; top: 18%; color: rgba(255,209,102,.95); animation-delay: -.6s; }
+    .intro-particles span:nth-child(2) { left: 24%; top: 68%; color: rgba(25,199,255,.95); animation-delay: -2.1s; }
+    .intro-particles span:nth-child(3) { left: 48%; top: 34%; color: rgba(60,242,180,.95); animation-delay: -3.2s; }
+    .intro-particles span:nth-child(4) { left: 68%; top: 15%; color: rgba(163,91,255,.95); animation-delay: -1.3s; }
+    .intro-particles span:nth-child(5) { left: 78%; top: 52%; color: rgba(255,209,102,.95); animation-delay: -4.5s; }
+    .intro-particles span:nth-child(6) { left: 58%; top: 76%; color: rgba(25,199,255,.95); animation-delay: -2.8s; }
+    .intro-particles span:nth-child(7) { left: 16%; top: 48%; color: rgba(60,242,180,.95); animation-delay: -5.1s; }
+    .intro-particles span:nth-child(8) { left: 87%; top: 28%; color: rgba(255,255,255,.92); animation-delay: -3.7s; }
+
+    .intro-rings span {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 0 30px rgba(25,199,255,.12);
+      animation: ringPulse 5s ease-in-out infinite;
+    }
+
+    .intro-rings span:nth-child(1) {
+      width: 240px;
+      height: 240px;
+      right: -60px;
+      top: -20px;
+    }
+
+    .intro-rings span:nth-child(2) {
+      width: 180px;
+      height: 180px;
+      left: -40px;
+      bottom: 30px;
+      animation-delay: -2.5s;
+    }
+
+    .intro-snake-trail {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      filter: saturate(1.12);
+      z-index: 4;
+    }
+
+    .intro-snake-trail span,
+    .intro-snake-head {
       position: absolute;
       display: block;
       border-radius: 999px;
-      filter: blur(1px);
-      box-shadow: 0 0 26px currentColor;
-      opacity: .95;
+      opacity: .99;
+    }
+
+    .intro-snake-trail span {
+      overflow: visible;
+      box-shadow: 0 0 20px currentColor, 0 0 54px currentColor;
+      animation: snakeTrailPulse 3s ease-in-out infinite;
+      transform-origin: center center;
+    }
+
+    .intro-snake-trail span::before {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border-radius: inherit;
+      background: rgba(5, 12, 28, .58);
+      filter: blur(7px);
+      z-index: -1;
+    }
+
+    .intro-snake-trail span::after {
+      content: "";
+      position: absolute;
+      inset: 22% 8% 22% 16%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.30), rgba(255,255,255,0));
+      opacity: .75;
+      mix-blend-mode: screen;
     }
 
     .intro-snake-trail span:nth-child(1) {
-      width: 280px;
-      height: 22px;
+      width: 300px;
+      height: 26px;
       left: 54%;
-      top: 17%;
+      top: 16%;
       transform: translateX(-50%) rotate(28deg);
       color: rgba(163,91,255,.95);
-      background: linear-gradient(90deg, rgba(163,91,255,0), rgba(163,91,255,.92), rgba(25,199,255,.9));
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 16px, rgba(255,255,255,0) 16px 30px),
+        linear-gradient(90deg, rgba(163,91,255,0), rgba(163,91,255,.98), rgba(25,199,255,.94));
+      animation-delay: -.2s;
     }
 
     .intro-snake-trail span:nth-child(2) {
-      width: 320px;
-      height: 24px;
+      width: 344px;
+      height: 28px;
       left: 50%;
       top: 45%;
       transform: translateX(-50%) rotate(-18deg);
-      color: rgba(25,199,255,.96);
-      background: linear-gradient(90deg, rgba(25,199,255,0), rgba(25,199,255,.94), rgba(60,242,180,.92));
+      color: rgba(25,199,255,.98);
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 16px, rgba(255,255,255,0) 16px 30px),
+        linear-gradient(90deg, rgba(25,199,255,0), rgba(25,199,255,.96), rgba(60,242,180,.94));
+      animation-delay: -.9s;
     }
 
     .intro-snake-trail span:nth-child(3) {
-      width: 250px;
-      height: 20px;
+      width: 270px;
+      height: 24px;
       left: 48%;
-      top: 73%;
+      top: 72%;
       transform: translateX(-50%) rotate(24deg);
-      color: rgba(60,242,180,.94);
-      background: linear-gradient(90deg, rgba(60,242,180,0), rgba(60,242,180,.92), rgba(255,209,102,.9));
+      color: rgba(60,242,180,.96);
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 16px, rgba(255,255,255,0) 16px 30px),
+        linear-gradient(90deg, rgba(60,242,180,0), rgba(60,242,180,.96), rgba(255,209,102,.92));
+      animation-delay: -1.4s;
     }
+
+    .intro-snake-head {
+      width: 58px;
+      height: 52px;
+      right: 8.5%;
+      top: 39%;
+      border-radius: 60% 42% 48% 55% / 52% 42% 58% 48%;
+      background:
+        radial-gradient(circle at 30% 28%, rgba(255,255,255,.9), transparent 16%),
+        radial-gradient(circle at 35% 35%, #f8ffb6, #7affcf 36%, #19c7ff 60%, #073960 100%);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 0 0 4px rgba(255,255,255,.06), 0 0 18px rgba(60,242,180,.82), 0 0 56px rgba(25,199,255,.62);
+      animation: snakeHeadHover 2.2s ease-in-out infinite;
+      filter: none;
+      z-index: 5;
+    }
+
+    .intro-snake-head::before,
+    .intro-snake-head::after {
+      content: "";
+      position: absolute;
+      top: 16px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(5,12,22,.9);
+      box-shadow: 0 0 8px rgba(255,255,255,.42);
+    }
+
+    .intro-snake-head::before { left: 18px; }
+    .intro-snake-head::after { left: 30px; }
 
     .intro-food {
       position: absolute;
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fff3bf, #ffd166 55%, #ff477e);
-      box-shadow: 0 0 24px rgba(255,209,102,.55);
+      background: radial-gradient(circle at 30% 30%, #fff9d6, #ffd166 55%, #ff8b42);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 0 26px rgba(255,209,102,.6), 0 0 42px rgba(255,132,66,.22);
       animation: floatFood 2.4s ease-in-out infinite;
+      z-index: 6;
     }
 
     .intro-food.one { top: 18%; left: 18%; }
@@ -1307,31 +1461,82 @@
       50% { transform: translateY(-10px) scale(1.06); }
     }
 
+    @keyframes introNebula {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: .9; }
+      50% { transform: translate(28px, 18px) scale(1.12); opacity: .65; }
+    }
+
+    @keyframes introGlowPulse {
+      0%, 100% { opacity: .8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.03); }
+    }
+
+    @keyframes introSweep {
+      0% { transform: translateX(-120%) skewX(-18deg); opacity: 0; }
+      16% { opacity: .55; }
+      48% { opacity: .8; }
+      100% { transform: translateX(145%) skewX(-18deg); opacity: 0; }
+    }
+
+    @keyframes particleFloat {
+      0% { transform: translateY(0) scale(.7); opacity: 0; }
+      20% { opacity: .9; }
+      60% { opacity: .9; }
+      100% { transform: translateY(-26px) scale(1.15); opacity: 0; }
+    }
+
+    @keyframes ringPulse {
+      0%, 100% { transform: scale(.94); opacity: .2; }
+      50% { transform: scale(1.06); opacity: .45; }
+    }
+
+    @keyframes snakeTrailPulse {
+      0%, 100% { filter: blur(1px) brightness(1); }
+      50% { filter: brightness(1.22); }
+    }
+
+    @keyframes snakeHeadHover {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-5px) scale(1.1); }
+    }
+
     .intro-mini-card {
       position: absolute;
       left: 18px;
       right: 18px;
-      bottom: 18px;
+      bottom: 16px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
+      z-index: 7;
     }
 
     .intro-mini-card div {
       border-radius: 16px;
       padding: 12px;
       border: 1px solid rgba(255,255,255,.08);
-      background: rgba(4,9,28,.72);
+      background: linear-gradient(180deg, rgba(7,13,32,.78), rgba(4,9,28,.58));
       color: rgba(255,255,255,.86);
       font-size: .9rem;
       text-align: center;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03), 0 10px 30px rgba(0,0,0,.22);
+      animation: miniCardFloat 4.2s ease-in-out infinite;
     }
+
+    .intro-mini-card div:nth-child(2) { animation-delay: -.8s; }
+    .intro-mini-card div:nth-child(3) { animation-delay: -1.6s; }
 
     .intro-mini-card strong {
       display: block;
       color: #fff;
       font-size: 1.02rem;
       margin-bottom: 6px;
+    }
+
+
+    @keyframes miniCardFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
     }
 
     @media (max-width: 920px) {
@@ -1365,13 +1570,6 @@
         <h2 id="introGameTitle">Snake Arena Ultra</h2>
         <p>Đây là giao diện chờ trước khi vào game. Bạn có thể bật nhạc ngay tại đây, xem nhanh các tính năng nổi bật và bấm vào nút bên dưới để bắt đầu trải nghiệm trò chơi.</p>
 
-        <div class="intro-chip-row">
-          <span class="intro-chip">🐍 Rắn săn mồi web</span>
-          <span class="intro-chip">🎵 Có nhạc chờ</span>
-          <span class="intro-chip">🏆 Bảng xếp hạng</span>
-          <span class="intro-chip">⚡ Độ khó 1–100</span>
-        </div>
-
         <div class="intro-buttons">
           <button id="introEnterBtn" class="intro-button-primary" type="button">Vào trò chơi</button>
           <button id="introMusicBtn" class="intro-button-secondary" type="button">🎵 Nhạc chờ: Bật</button>
@@ -1389,10 +1587,19 @@
 
       <div class="intro-visual">
         <div class="intro-art">
+          <div class="intro-grid-glow"></div>
+          <div class="intro-light-sweep"></div>
+          <div class="intro-particles" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="intro-rings" aria-hidden="true">
+            <span></span><span></span>
+          </div>
           <div class="intro-snake-trail">
             <span></span>
             <span></span>
             <span></span>
+            <i class="intro-snake-head"></i>
           </div>
           <div class="intro-food one"></div>
           <div class="intro-food two"></div>
@@ -2328,7 +2535,13 @@
       obstacles.forEach(drawObstacle);
       drawFood(food);
       drawParticles();
-      getRenderSnake(alpha).forEach((part, i) => drawSnake(part, i));
+
+      const renderSnake = getRenderSnake(alpha);
+      drawSnakeSpine(renderSnake);
+      for (let i = renderSnake.length - 1; i >= 1; i--) {
+        drawSnakeSegment(renderSnake, i);
+      }
+      drawSnakeHead(renderSnake[0], renderSnake[1] || renderSnake[0]);
       ctx.restore();
     }
 
@@ -2358,30 +2571,155 @@
       ctx.closePath();
     }
 
-    function drawSnake(part, index) {
-      const pad = index === 0 ? 2 : 3.5;
-      const x = part.x * CELL + pad;
-      const y = part.y * CELL + pad;
-      const size = CELL - pad * 2;
-      const grad = ctx.createLinearGradient(x, y, x + size, y + size);
-      grad.addColorStop(0, index === 0 ? '#fff59a' : '#3cf2b4');
-      grad.addColorStop(1, index === 0 ? '#3cf2b4' : '#19c7ff');
-      ctx.shadowColor = index === 0 ? 'rgba(255, 245, 154, .45)' : 'rgba(60, 242, 180, .25)';
-      ctx.shadowBlur = index === 0 ? 18 : 10;
-      ctx.fillStyle = grad;
-      roundedRect(x, y, size, size, 8);
-      ctx.fill();
-      ctx.shadowBlur = 0;
-
-      if (index === 0) {
-        ctx.fillStyle = '#07101f';
-        const eyeSize = 3.4;
-        const ex1 = x + size * .34;
-        const ex2 = x + size * .66;
-        const ey = y + size * .36;
-        ctx.beginPath(); ctx.arc(ex1, ey, eyeSize, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.arc(ex2, ey, eyeSize, 0, Math.PI * 2); ctx.fill();
+    function drawSnakeSpine(parts) {
+      if (!parts || parts.length < 2) return;
+      const t = performance.now() / 240;
+      ctx.save();
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.shadowColor = 'rgba(25, 199, 255, .22)';
+      ctx.shadowBlur = 16;
+      for (let i = 0; i < parts.length - 1; i++) {
+        const a = parts[i];
+        const b = parts[i + 1];
+        const ax = a.x * CELL + CELL / 2;
+        const ay = a.y * CELL + CELL / 2;
+        const bx = b.x * CELL + CELL / 2;
+        const by = b.y * CELL + CELL / 2;
+        const line = ctx.createLinearGradient(ax, ay, bx, by);
+        const shimmer = 0.35 + 0.15 * Math.sin(t + i * 0.55);
+        line.addColorStop(0, `rgba(60,242,180,${shimmer})`);
+        line.addColorStop(1, `rgba(25,199,255,${shimmer + 0.12})`);
+        ctx.strokeStyle = line;
+        ctx.lineWidth = CELL * (0.54 - Math.min(i, parts.length - 1) * 0.009);
+        ctx.beginPath();
+        ctx.moveTo(ax, ay);
+        ctx.lineTo(bx, by);
+        ctx.stroke();
       }
+      ctx.restore();
+    }
+
+    function drawSnakeSegment(parts, index) {
+      const part = parts[index];
+      const t = performance.now() / 240;
+      const cx = part.x * CELL + CELL / 2;
+      const cy = part.y * CELL + CELL / 2;
+      const pulse = Math.sin(t + index * 0.55) * 0.45;
+      const baseRadius = CELL * (0.33 - Math.min(index, parts.length - 1) * 0.0026);
+      const radius = Math.max(CELL * 0.21, baseRadius + pulse * 0.16);
+      const grad = ctx.createRadialGradient(cx - radius * 0.45, cy - radius * 0.55, radius * 0.18, cx, cy, radius * 1.28);
+      grad.addColorStop(0, index % 2 === 0 ? '#c4fff2' : '#fff1a3');
+      grad.addColorStop(0.28, '#71f7ca');
+      grad.addColorStop(0.72, '#1ecfe8');
+      grad.addColorStop(1, '#0b5478');
+
+      ctx.save();
+      ctx.shadowColor = index < 4 ? 'rgba(60,242,180,.32)' : 'rgba(25,199,255,.22)';
+      ctx.shadowBlur = 14;
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.globalAlpha = 0.28;
+      ctx.fillStyle = 'rgba(255,255,255,.75)';
+      ctx.beginPath();
+      ctx.ellipse(cx - radius * 0.28, cy - radius * 0.34, radius * 0.38, radius * 0.2, -0.55, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.globalAlpha = 0.18;
+      ctx.strokeStyle = 'rgba(255,255,255,.55)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius * 0.68, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawSnakeHead(head, neck) {
+      const t = performance.now();
+      const dx = head.x - neck.x || direction.x || 1;
+      const dy = head.y - neck.y || direction.y || 0;
+      const angle = Math.atan2(dy, dx);
+      const cx = head.x * CELL + CELL / 2;
+      const cy = head.y * CELL + CELL / 2;
+      const jawBounce = Math.sin(t / 120) * 0.03;
+      const tongueLen = CELL * (0.32 + (Math.sin(t / 90) * 0.08 + 0.08));
+
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(angle);
+
+      const headGrad = ctx.createLinearGradient(-CELL * 0.55, -CELL * 0.45, CELL * 0.65, CELL * 0.55);
+      headGrad.addColorStop(0, '#fff4b7');
+      headGrad.addColorStop(0.18, '#79ffd1');
+      headGrad.addColorStop(0.58, '#25d7ef');
+      headGrad.addColorStop(1, '#0a577a');
+
+      ctx.shadowColor = 'rgba(60,242,180,.48)';
+      ctx.shadowBlur = 22;
+      ctx.fillStyle = headGrad;
+      ctx.beginPath();
+      ctx.moveTo(CELL * 0.52, 0);
+      ctx.bezierCurveTo(CELL * 0.34, -CELL * 0.38, -CELL * 0.30, -CELL * 0.42, -CELL * 0.52, 0);
+      ctx.bezierCurveTo(-CELL * 0.30, CELL * 0.42, CELL * 0.34, CELL * 0.38, CELL * 0.52, 0);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.shadowBlur = 0;
+      ctx.globalAlpha = 0.33;
+      ctx.fillStyle = 'rgba(255,255,255,.82)';
+      ctx.beginPath();
+      ctx.ellipse(-CELL * 0.08, -CELL * 0.17, CELL * 0.25, CELL * 0.09, -0.25, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = 'rgba(6,17,31,.38)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(CELL * 0.04, 0);
+      ctx.quadraticCurveTo(CELL * 0.26, CELL * (0.12 + jawBounce), CELL * 0.44, CELL * 0.04);
+      ctx.stroke();
+
+      const eyeGlow = 0.95 + Math.sin(t / 140) * 0.05;
+      [[CELL * 0.14, -CELL * 0.16], [CELL * 0.14, CELL * 0.16]].forEach(([ex, ey]) => {
+        ctx.save();
+        ctx.translate(ex, ey);
+        ctx.scale(1, 0.88);
+        ctx.shadowColor = 'rgba(255,255,255,.68)';
+        ctx.shadowBlur = 10;
+        ctx.fillStyle = 'rgba(255,255,255,.98)';
+        ctx.beginPath();
+        ctx.arc(0, 0, CELL * 0.11, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = `rgba(8,15,26,${eyeGlow})`;
+        ctx.beginPath();
+        ctx.arc(CELL * 0.02, 0, CELL * 0.05, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = 'rgba(25,199,255,.95)';
+        ctx.beginPath();
+        ctx.arc(-CELL * 0.028, -CELL * 0.02, CELL * 0.022, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+
+      ctx.strokeStyle = 'rgba(255, 92, 159, .98)';
+      ctx.lineWidth = 2.1;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(CELL * 0.48, 0);
+      ctx.lineTo(CELL * 0.48 + tongueLen, -CELL * 0.05);
+      ctx.moveTo(CELL * 0.48 + tongueLen * 0.78, -CELL * 0.05);
+      ctx.lineTo(CELL * 0.48 + tongueLen, -CELL * 0.12);
+      ctx.moveTo(CELL * 0.48 + tongueLen * 0.78, -CELL * 0.05);
+      ctx.lineTo(CELL * 0.48 + tongueLen, CELL * 0.02);
+      ctx.stroke();
+
+      ctx.restore();
     }
 
     function drawFood(cell) {
